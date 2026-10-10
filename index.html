@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Розпродаж офісних і геймерських крісел в Ужгороді: фото, ціни, доставка.">
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Крісла з офісу · Ужгород</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: inventory-sheet storefront — sticker-numbered cards in a responsive grid, filter row on top */
+:root{
+  --bg:#eceff2; --surface:#ffffff; --ink:#151d26; --muted:#5b6672; --line:#d5dbe1;
+  --tag:#f2c230; --tag-ink:#1b1606; --accent:#1f4f8f; --hold:#b4472f;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161b; --surface:#1a2129; --ink:#e7ebef; --muted:#9aa6b2; --line:#2b3540;
+  --tag:#f2c230; --tag-ink:#1b1606; --accent:#8db4ea; --hold:#e38a74; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161b; --surface:#1a2129; --ink:#e7ebef; --muted:#9aa6b2; --line:#2b3540;
+  --tag:#f2c230; --tag-ink:#1b1606; --accent:#8db4ea; --hold:#e38a74; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 56px}
+header.top{display:grid;gap:14px;padding-block:8px 22px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.08;margin:0;text-wrap:balance;max-width:18ch}
+.lead{max-width:62ch;color:var(--muted);margin:0;font-size:16px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px}
+.facts span{display:inline-flex;gap:6px;align-items:baseline}
+.facts b{font-family:var(--f-mono);font-weight:700}
+.filters{display:flex;flex-wrap:wrap;gap:8px;padding-block:20px 18px}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
+.chip .n{font-family:var(--f-mono);color:var(--muted);margin-left:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.chip:focus-visible,.thumb:focus-visible,.main:focus-visible,.lb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.media{position:relative;background:var(--line)}
+.main{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;cursor:zoom-in;border:0;padding:0;background:none}
+.main img{width:100%;height:100%;object-fit:cover;display:block}
+.sticker{position:absolute;top:10px;left:10px;background:var(--tag);color:var(--tag-ink);font-family:var(--f-mono);font-weight:700;font-size:13px;padding:3px 8px;border-radius:3px;transform:rotate(-2deg);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.status{position:absolute;top:10px;right:10px;background:var(--hold);color:#fff;font-size:12px;font-weight:600;padding:3px 8px;border-radius:3px}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px}
+.thumb{border:0;padding:0;background:none;cursor:pointer;aspect-ratio:1;overflow:hidden;border-radius:2px;opacity:.65}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb[aria-current="true"]{opacity:1;outline:2px solid var(--ink);outline-offset:-2px}
+.body{display:grid;gap:8px;padding:12px 14px 16px}
+.type{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.name{font-weight:600;font-size:16px;line-height:1.3;margin:0}
+.price{font-family:var(--f-mono);font-weight:700;font-size:22px;display:flex;align-items:baseline;gap:8px}
+.price small{font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted)}
+.note{font-size:13.5px;color:var(--muted);margin:0}
+.card.reserved .main img{filter:grayscale(.6);opacity:.75}
+.terms{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;border-top:1px solid var(--line);padding-top:24px}
+.terms h2{font-family:var(--f-display);font-weight:500;font-size:17px;margin:0 0 6px}
+.terms p,.terms li{color:var(--muted);margin:0;font-size:14.5px}
+.terms ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.lb{position:fixed;inset:0;background:rgba(8,11,14,.92);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+.lb img{max-height:88vh;max-width:100%;border-radius:4px}
+.lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;font-size:26px;width:46px;height:46px;border-radius:50%;cursor:pointer}
+.lb .x{top:calc(14px + env(safe-area-inset-top,0px));right:14px}
+.lb .p{left:10px;top:50%}.lb .n2{right:10px;top:50%}
+.lb .cap{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;color:#dfe5ea;font-family:var(--f-mono);font-size:13px}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Ужгород · розпродаж після закриття офісу</div>
+    <h1>Офісні та геймерські крісла</h1>
+    <p class="lead">Усі крісла відремонтовані й технічно справні: газліфт, гойдання, регулювання та колеса працюють. Є косметичні сліди використання — потертості й плями на оббивці, вони видно на фото кожного крісла.</p>
+    <div class="facts">
+      <span>В наявності <b id="cnt">—</b></span>
+      <span>Ціни від <b id="minp">—</b></span>
+      <span>Від 3 шт <b>−10%</b></span>
+      <span>Ціна договірна</span>
+    </div>
+  </header>
+
+  <nav class="filters" id="filters" aria-label="Фільтр за типом"></nav>
+  <main class="grid" id="grid"></main>
+
+  <section class="terms">
+    <div>
+      <h2>Отримання</h2>
+      <ul>
+        <li>Самовивіз в Ужгороді — можна подивитись і посидіти перед покупкою.</li>
+        <li>Нова Пошта або Укрпошта по всій Україні, накладеним платежем: оглядаєте у відділенні й оплачуєте при отриманні.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Доставка</h2>
+      <p>За тарифом перевізника, оплачує отримувач. Крісло відправляється розібраним у компактній коробці; для Нової Пошти це зазвичай тариф «до 30 кг» — близько 200 грн.</p>
+    </div>
+    <div>
+      <h2>Кілька крісел</h2>
+      <p>Однакові моделі є по кілька штук — зручно для офісу чи класу. Від 3 крісел знижка 10%, на весь комплект — окрема ціна.</p>
+    </div>
+  </section>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Фото крісла">
+  <img id="lbimg" alt="">
+  <button class="x" id="lbx" aria-label="Закрити">×</button>
+  <button class="p" id="lbp" aria-label="Попереднє фото">‹</button>
+  <button class="n2" id="lbn" aria-label="Наступне фото">›</button>
+  <div class="cap" id="lbcap"></div>
+</div>
+
+<script>
+const T={
+  bit:"AMF «Біт» · сітка",compact:"Сітка · компактна спинка",jup:"«Юпітер» · тканина",
+  tall:"Сітка · висока спинка",chrome:"Сітка · хромована база",game:"Геймерські"
+};
+const C=[
+ {n:1,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Темні плями на сірому сидінні, потертості пластику."},
+ {n:2,t:"game",name:"Геймерське, екошкіра чорно-біла",p:1500,ph:4,note:"Подушки під голову й поперек. Екошкіра на передньому краї сидіння потріскалась.",res:true},
+ {n:3,t:"jup",name:"«Юпітер», синій",p:1300,ph:3,note:"Спинка регулюється по висоті. Легкі плями на сидінні, потерті підлокітники."},
+ {n:4,t:"game",name:"Геймерське LEBOO, тканина",p:3200,ph:4,note:"Висока спинка, подушки під шию й поперек, висувна підніжка. Сліди використання на сидінні."},
+ {n:5,t:"bit",name:"AMF «Біт», сіре сидіння",p:1300,ph:4,note:"Сидіння відносно чисте, дрібні сліди використання."},
+ {n:6,t:"bit",name:"AMF «Біт», чорне сидіння",p:1100,ph:4,note:"Світла пляма в центрі сидіння (на останньому фото)."},
+ {n:7,t:"tall",name:"Висока сітчаста спинка",p:1100,ph:4,note:"Сітка ціла, сидіння з дрібними слідами."},
+ {n:8,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Сидіння запилене, дрібні сліди."},
+ {n:9,t:"jup",name:"«Юпітер», чорний",p:1000,ph:4,note:"Світлі сліди на тканині, потерті підлокітники, подряпини на задній кришці."},
+ {n:10,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Дрібні сліди на сидінні."},
+ {n:11,t:"chrome",name:"Сітка на хромованій хрестовині",p:1500,ph:4,note:"Металева хромована база без пошкоджень, сидіння запилене."},
+ {n:12,t:"bit",name:"AMF «Біт», чорне сидіння",p:1200,ph:4,note:"Плями на сидінні."},
+ {n:13,t:"bit",name:"AMF «Біт», чорне сидіння",p:1100,ph:4,note:"Плями й розводи на сидінні."},
+ {n:14,t:"jup",name:"«Юпітер», синій",p:1100,ph:4,note:"Темні плями на сидінні, потертості задньої кришки."},
+ {n:15,t:"compact",name:"Сітчасте, темно-сіре сидіння",p:1000,ph:4,note:"Сидіння відносно чисте."},
+ {n:16,t:"bit",name:"AMF «Біт», чорне сидіння",p:1200,ph:4,note:"Світлі сліди на сидінні."},
+ {n:17,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Відносно чисте, дрібні сліди."},
+ {n:18,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Дрібні сліди на сидінні."},
+ {n:19,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Плями на сидінні."},
+ {n:20,t:"bit",name:"AMF «Біт», сіре сидіння",p:1250,ph:4,note:"Слід у центрі сидіння."},
+ {n:21,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Плями на сидінні."},
+ {n:22,t:"jup",name:"«Юпітер», синій",p:1100,ph:4,note:"Плями на сидінні, подряпини на пластиковій кришці спинки."}
+];
+const pad=n=>String(n).padStart(2,"0");
+const img=(c,k)=>`k${pad(c.n)}_${k}.jpg`;
+const fmt=v=>v.toLocaleString("uk-UA").replace(/ /g," ")+" грн";
+const avail=C.filter(c=>!c.res);
+document.getElementById("cnt").textContent=avail.length+" шт";
+document.getElementById("minp").textContent=fmt(Math.min(...avail.map(c=>c.p)));
+
+let filter="all";
+try{filter=localStorage.getItem("kf")||"all"}catch(e){}
+const order=["all","bit","compact","jup","tall","chrome","game"];
+const fl=document.getElementById("filters");
+function chips(){
+  fl.innerHTML=order.map(k=>{
+    const n=k==="all"?C.length:C.filter(c=>c.t===k).length;
+    const label=k==="all"?"Усі":T[k];
+    return `<button class="chip" id="f-${k}" data-k="${k}" aria-pressed="${k===filter}">${label}<span class="n">${n}</span></button>`;
+  }).join("");
+}
+fl.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;filter=b.dataset.k;try{localStorage.setItem("kf",filter)}catch(e){};chips();render()});
+
+const grid=document.getElementById("grid");
+function render(){
+  const list=C.filter(c=>filter==="all"||c.t===filter);
+  grid.innerHTML=list.map(c=>{
+    const th=Array.from({length:c.ph},(_,i)=>`<button class="thumb" data-n="${c.n}" data-k="${i+1}" aria-label="Фото ${i+1}" aria-current="${i===0}"><img loading="lazy" src="${img(c,i+1)}" alt=""></button>`).join("");
+    return `<article class="card${c.res?" reserved":""}" id="c${c.n}">
+      <div class="media">
+        <button class="main" data-n="${c.n}" aria-label="Збільшити фото крісла №${pad(c.n)}"><img loading="lazy" src="${img(c,1)}" alt="Крісло №${pad(c.n)}: ${c.name}"></button>
+        <span class="sticker">№ ${pad(c.n)}</span>
+        ${c.res?'<span class="status">Заброньовано</span>':''}
+      </div>
+      <div class="thumbs">${th}</div>
+      <div class="body">
+        <div class="type">${T[c.t]}</div>
+        <h3 class="name">${c.name}</h3>
+        <div class="price">${fmt(c.p)}<small>${c.res?"бронь":"договірна"}</small></div>
+        <p class="note">${c.note}</p>
+      </div>
+    </article>`;
+  }).join("");
+}
+grid.addEventListener("click",e=>{
+  const t=e.target.closest(".thumb");
+  if(t){const card=t.closest(".card");card.querySelector(".main img").src=img({n:+t.dataset.n},t.dataset.k);
+    card.querySelectorAll(".thumb").forEach(x=>x.setAttribute("aria-current",x===t));card.dataset.k=t.dataset.k;return}
+  const m=e.target.closest(".main");
+  if(m){const card=m.closest(".card");openLb(+m.dataset.n,+(card.dataset.k||1))}
+});
+
+const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg"),cap=document.getElementById("lbcap");
+let cur={n:1,k:1};
+function show(){const c=C.find(x=>x.n===cur.n);lbimg.src=img(c,cur.k);lbimg.alt=`Крісло №${pad(c.n)}, фото ${cur.k}`;cap.textContent=`№ ${pad(c.n)} · ${c.name} · ${cur.k}/${c.ph}`}
+function openLb(n,k){cur={n,k};show();lb.hidden=false;document.getElementById("lbx").focus()}
+function step(d){const c=C.find(x=>x.n===cur.n);cur.k=((cur.k-1+d+c.ph)%c.ph)+1;show()}
+document.getElementById("lbx").onclick=()=>lb.hidden=true;
+document.getElementById("lbp").onclick=()=>step(-1);
+document.getElementById("lbn").onclick=()=>step(1);
+lb.addEventListener("click",e=>{if(e.target===lb)lb.hidden=true});
+document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")lb.hidden=true;if(e.key==="ArrowLeft")step(-1);if(e.key==="ArrowRight")step(1)});
+
+chips();render();
+</script>
+
+</body>
+</html>
