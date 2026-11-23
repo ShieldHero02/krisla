@@ -57,6 +57,9 @@ h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,5vw,46px);l
 .price{font-family:var(--f-mono);font-weight:700;font-size:22px;display:flex;align-items:baseline;gap:8px}
 .price small{font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted)}
 .note{font-size:13.5px;color:var(--muted);margin:0}
+.card.sold .main img,.card.sold .thumb img{filter:grayscale(1);opacity:.6}
+.card.sold .price{color:var(--muted)}
+.status.sold{background:var(--muted)}
 .card.reserved .main img{filter:grayscale(.6);opacity:.75}
 .terms{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;border-top:1px solid var(--line);padding-top:24px}
 .terms h2{font-family:var(--f-display);font-weight:500;font-size:17px;margin:0 0 6px}
@@ -124,7 +127,6 @@ const T={
 };
 const C=[
  {n:1,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Темні плями на сірому сидінні, потертості пластику."},
- {n:2,t:"game",name:"Геймерське, екошкіра чорно-біла",p:1500,ph:4,note:"Подушки під голову й поперек. Екошкіра на передньому краї сидіння потріскалась.",res:true},
  {n:3,t:"jup",name:"«Юпітер», синій",p:1300,ph:3,note:"Спинка регулюється по висоті. Легкі плями на сидінні, потерті підлокітники."},
  {n:4,t:"game",name:"Геймерське LEBOO, тканина",p:3200,ph:4,note:"Висока спинка, подушки під шию й поперек, висувна підніжка. Сліди використання на сидінні."},
  {n:5,t:"bit",name:"AMF «Біт», сіре сидіння",p:1300,ph:4,note:"Сидіння відносно чисте, дрібні сліди використання."},
@@ -133,7 +135,6 @@ const C=[
  {n:8,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Сидіння запилене, дрібні сліди."},
  {n:9,t:"jup",name:"«Юпітер», чорний",p:1000,ph:4,note:"Світлі сліди на тканині, потерті підлокітники, подряпини на задній кришці."},
  {n:10,t:"compact",name:"Сітчасте, чорне",p:1000,ph:4,note:"Дрібні сліди на сидінні."},
- {n:11,t:"chrome",name:"Сітка на хромованій хрестовині",p:1500,ph:4,note:"Металева хромована база без пошкоджень, сидіння запилене."},
  {n:12,t:"bit",name:"AMF «Біт», чорне сидіння",p:1200,ph:4,note:"Плями на сидінні."},
  {n:13,t:"bit",name:"AMF «Біт», чорне сидіння",p:1100,ph:4,note:"Плями й розводи на сидінні."},
  {n:14,t:"jup",name:"«Юпітер», синій",p:1100,ph:4,note:"Темні плями на сидінні, потертості задньої кришки."},
@@ -144,22 +145,25 @@ const C=[
  {n:19,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Плями на сидінні."},
  {n:20,t:"bit",name:"AMF «Біт», сіре сидіння",p:1250,ph:4,note:"Слід у центрі сидіння."},
  {n:21,t:"bit",name:"AMF «Біт», сіре сидіння",p:1200,ph:4,note:"Плями на сидінні."},
+ {n:2,t:"game",name:"Геймерське, екошкіра чорно-біла",p:1300,ph:4,note:"Подушки під голову й поперек.",sold:true},
+ {n:11,t:"chrome",name:"Сітка на хромованій хрестовині",p:1000,ph:4,note:"Хромована металева база.",sold:true},
  {n:22,t:"jup",name:"«Юпітер», синій",p:1100,ph:4,note:"Плями на сидінні, подряпини на пластиковій кришці спинки."}
 ];
 const pad=n=>String(n).padStart(2,"0");
 const img=(c,k)=>`k${pad(c.n)}_${k}.jpg`;
 const fmt=v=>v.toLocaleString("uk-UA").replace(/ /g," ")+" грн";
-const avail=C.filter(c=>!c.res);
+const avail=C.filter(c=>!c.res&&!c.sold);
 document.getElementById("cnt").textContent=avail.length+" шт";
 document.getElementById("minp").textContent=fmt(Math.min(...avail.map(c=>c.p)));
 
 let filter="all";
 try{filter=localStorage.getItem("kf")||"all"}catch(e){}
+if(filter!=="all"&&!avail.some(c=>c.t===filter))filter="all";
 const order=["all","bit","compact","jup","tall","chrome","game"];
 const fl=document.getElementById("filters");
 function chips(){
-  fl.innerHTML=order.map(k=>{
-    const n=k==="all"?C.length:C.filter(c=>c.t===k).length;
+  fl.innerHTML=order.filter(k=>k==="all"||avail.some(c=>c.t===k)).map(k=>{
+    const n=k==="all"?avail.length:avail.filter(c=>c.t===k).length;
     const label=k==="all"?"Усі":T[k];
     return `<button class="chip" id="f-${k}" data-k="${k}" aria-pressed="${k===filter}">${label}<span class="n">${n}</span></button>`;
   }).join("");
@@ -168,20 +172,20 @@ fl.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;f
 
 const grid=document.getElementById("grid");
 function render(){
-  const list=C.filter(c=>filter==="all"||c.t===filter);
+  const list=C.filter(c=>filter==="all"||c.t===filter).sort((a,b)=>(a.sold?1:0)-(b.sold?1:0));
   grid.innerHTML=list.map(c=>{
     const th=Array.from({length:c.ph},(_,i)=>`<button class="thumb" data-n="${c.n}" data-k="${i+1}" aria-label="Фото ${i+1}" aria-current="${i===0}"><img loading="lazy" src="${img(c,i+1)}" alt=""></button>`).join("");
-    return `<article class="card${c.res?" reserved":""}" id="c${c.n}">
+    return `<article class="card${c.res?" reserved":""}${c.sold?" sold":""}" id="c${c.n}">
       <div class="media">
         <button class="main" data-n="${c.n}" aria-label="Збільшити фото крісла №${pad(c.n)}"><img loading="lazy" src="${img(c,1)}" alt="Крісло №${pad(c.n)}: ${c.name}"></button>
         <span class="sticker">№ ${pad(c.n)}</span>
-        ${c.res?'<span class="status">Заброньовано</span>':''}
+        ${c.sold?'<span class="status sold">Продано</span>':c.res?'<span class="status">Заброньовано</span>':''}
       </div>
       <div class="thumbs">${th}</div>
       <div class="body">
         <div class="type">${T[c.t]}</div>
         <h3 class="name">${c.name}</h3>
-        <div class="price">${fmt(c.p)}<small>${c.res?"бронь":"договірна"}</small></div>
+        <div class="price">${c.sold?"<s>"+fmt(c.p)+"</s>":fmt(c.p)}<small>${c.sold?"продано":c.res?"бронь":"договірна"}</small></div>
         <p class="note">${c.note}</p>
       </div>
     </article>`;
